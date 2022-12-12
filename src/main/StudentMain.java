@@ -1,9 +1,24 @@
 package main;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.microsoft.schemas.office.visio.x2012.main.ShapeSheetType;
+
 import crudstudent.CRUDStu;
+import crudstudent.WriteReadExcel;
 import datastudent.Student;
 
 public class StudentMain {
@@ -18,10 +33,11 @@ public class StudentMain {
     lists.add(new Student(5, "thien", "21d"));
     lists.add(new Student(6, "gian", "11f"));
     
-   
+    
   CRUDStu crud = new CRUDStu();
     Scanner nhap = new Scanner(System.in);
-    System.out.println("xin moi chon mot chuc nang :  \n no 1:\t xem danh sach cac hoc sinh: \n no 2\t xem hoc sinh theo id: \n no 3:\tthem hoc sinh moi : \n no 4: \tsua thong tim hoc sinh");
+    System.out.println("xin moi chon mot chuc nang :  \n no 1:\t xem danh sach cac hoc sinh: \n no 2\t xem hoc sinh theo id: \n no 3:\tthem hoc sinh moi : \n no 4: \tsua thong tim hoc sinh \n"
+        + "no 5: \tghi vao excel :\nno 6: \tdoc Excexcel :");
   
     int  chon= nhap.nextInt();
     nhap.nextLine();
@@ -64,9 +80,28 @@ public class StudentMain {
   
         break;
       }
+      case 5:{
+       WriteReadExcel ws = new WriteReadExcel();
+       try {
+        ws.writeExcel(lists);
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+       break;
+      }
+      case 6:{
+        WriteReadExcel wr = new WriteReadExcel();
+        try {
+          wr.readExcel();
+        } catch (Exception e) {
+          // TODO: handle exception
+          e.printStackTrace();
+        }
+        break;
+      }
       default:
         System.out.println("rwe");
-        
     }
   }
 

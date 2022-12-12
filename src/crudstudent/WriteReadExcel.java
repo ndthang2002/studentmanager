@@ -2,6 +2,7 @@ package crudstudent;
 
 import java.awt.print.Book;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -36,18 +37,14 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
+
 import datastudent.Student;
 import javafx.scene.chart.BubbleChart;
 import javafx.scene.input.DataFormat;
 import javafx.scene.layout.Background;
 
 public class WriteReadExcel {
-  public  static final int COLUMN_INDEX_ID =0;
-  public  static final int COLUMN_INDEX_TITLE     =1;
-  public  static final int COLUMN_INDEX_PRICE     =2;
-  public  static final int COLUMN_INDEX_QUANTITY  =3;
-  public  static final int COLUMN_INDEX_TOTAL     =4;
-  private static CellStyle cellStyleFormatNumber = null;
+ 
   
   public static void writeExcel(List<Student> lists ) throws IOException {
     
@@ -57,12 +54,12 @@ public class WriteReadExcel {
     cellStyle.setFillBackgroundColor(IndexedColors.RED.getIndex());
     
     Map<Integer , Object[]> data = new HashMap<Integer,Object[]>();
-    for(int i=1;i<lists.size();i++) {
+    for(int i=0;i<lists.size();i++) {
           data.put(i, new Object[] {lists.get(i).getIdStudent(),lists.get(i).getName(),lists.get(i).getLop()});
 
     }
     data.put(0, new Object[] {"id","name","lop"});
-   
+    
     Set<Integer> keyset = data.keySet(); 
     int rownum=0;
     for(Integer key : keyset) {
@@ -74,7 +71,7 @@ public class WriteReadExcel {
         cellStyle.setBorderBottom(BorderStyle.THICK);
         cellStyle.setFillForegroundColor(HSSFColorPredefined.DARK_GREEN.getIndex());
         cellStyle.setFillBackgroundColor(HSSFColorPredefined.YELLOW.getIndex());
-     
+        
         cell.setCellStyle(cellStyle);
         
         if(obj instanceof String) {
@@ -94,5 +91,41 @@ public class WriteReadExcel {
       e.printStackTrace();
       // TODO: handle exception
     }
+  }
+  
+  //read 
+  public static void readExcel() {
+      try {
+        FileInputStream file = new FileInputStream(new File("haha.xlsx"));
+        XSSFWorkbook workbook = new XSSFWorkbook(file);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+        // lap qua tung thang row 
+        Iterator<Row> rowIterator = sheet.iterator();
+        
+        while(rowIterator.hasNext()) {
+          Row row = rowIterator.next();
+          
+          Iterator<Cell> cellIterator = row.cellIterator( );
+          while(cellIterator.hasNext()) {
+            Cell cell = cellIterator.next();
+            switch(cell.getCellType()) {
+              case Cell.CELL_TYPE_NUMERIC:
+              {
+                System.out.print((int)cell.getNumericCellValue()+"\t");
+                break;
+              }
+              case Cell.CELL_TYPE_STRING:
+                System.out.print(cell.getStringCellValue()+"\t");
+                break;
+            }
+            
+          }
+          System.out.println("");
+        }
+        file.close();
+      } catch (Exception e) {
+        // TODO: handle exception
+        e.printStackTrace();
+      }
   }
 }
