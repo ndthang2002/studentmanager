@@ -20,11 +20,17 @@ import com.microsoft.schemas.office.visio.x2012.main.ShapeSheetType;
 import crudstudent.CRUDStu;
 import crudstudent.WriteReadExcel;
 import datastudent.Student;
+import repository.IstudentRepository;
+import service.StudentService;
 
 public class StudentMain {
   
   
   public static void main (String[] args) {
+    
+    // tiem mot phat
+ 
+    
    List<Student> lists = new ArrayList<>();
     lists.add(new Student(1, "thang", "12a"));
     lists.add(new Student(2, "hieu", "11a"));
@@ -39,6 +45,7 @@ public class StudentMain {
     System.out.println("xin moi chon mot chuc nang :  \n no 1:\t xem danh sach cac hoc sinh: \n no 2\t xem hoc sinh theo id: \n no 3:\tthem hoc sinh moi : \n no 4: \tsua thong tim hoc sinh \n"
         + "no 5: \tghi vao excel :\nno 6: \tdoc Excexcel :");
   
+    System.out.println("lam viec voi database \n7\tadd:\n8\tdelete:\n9\tupdate:");
     int  chon= nhap.nextInt();
     nhap.nextLine();
     switch (chon) {
@@ -98,6 +105,23 @@ public class StudentMain {
           // TODO: handle exception
           e.printStackTrace();
         }
+        break;
+      }
+      case 7 :{
+        
+        StudentService sv = new StudentService();
+        sv.add();
+        break;
+      }
+      case 8:{
+        StudentService sv = new StudentService();
+        sv.delete();
+        break;
+      }
+      case 9:{
+        StudentService sv = new StudentService();
+        Student st = new Student(2,"hien", "10");
+        sv.update(st);
         break;
       }
       default:
