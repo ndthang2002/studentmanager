@@ -2,7 +2,7 @@ package repository;
 
 import java.util.List;
 
-import datastudent.Student;
+import data.Student;
 
 public interface IstudentRepository<T> {
 

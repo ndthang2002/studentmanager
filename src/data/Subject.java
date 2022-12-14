@@ -1,4 +1,4 @@
-package datastudent;
+package data;
 
 public class Subject {
 

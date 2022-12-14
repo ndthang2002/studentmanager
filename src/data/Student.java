@@ -1,4 +1,4 @@
-package datastudent;
+package data;
 
 public class Student {
 
@@ -40,4 +40,9 @@ public class Student {
   }
   
   
+  @Override
+  public String toString() {
+    
+    return "student :"+idStudent+" "+name+" "+lop;
+  }
 }

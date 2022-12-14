@@ -2,7 +2,7 @@ package service;
 
 import org.apache.poi.ss.formula.functions.EDate;
 
-import datastudent.Student;
+import data.Student;
 import repository.StudentRepository;
 
 public class StudentService {
@@ -24,5 +24,8 @@ StudentRepository<Student> stuRes = new StudentRepository<>();
     }
     
     return stu;
+  }
+  public Student get(int id ) {
+    return stuRes.get(id);
   }
 }

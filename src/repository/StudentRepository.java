@@ -3,13 +3,14 @@ package repository;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Row;
 
-import datastudent.Student;
+import data.Student;
 
 public class StudentRepository<T> implements IstudentRepository<T>{
 
@@ -24,8 +25,8 @@ public class StudentRepository<T> implements IstudentRepository<T>{
       String sql ="INSERT INTO student (name ,lop) values(?,?)";
       conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tera","thang","");
       PreparedStatement pmts = conn.prepareStatement(sql);
-      pmts.setString(1, "thang");
-      pmts.setString(2, "12a");
+      pmts.setString(1, "thuy");
+      pmts.setString(2, "11");
       pmts.execute();
       
     } catch (SQLException e) {
@@ -77,12 +78,25 @@ public class StudentRepository<T> implements IstudentRepository<T>{
   @Override
   public Student get(int id) {
     // TODO Auto-generated method stub
+    Student stu=null;
     try {
-      
+      conn = DriverManager.getConnection(url,username, "");
+      String sql =" select * from student where student_id="+id;
+      Statement st = conn.createStatement();
+      ResultSet rs = st.executeQuery(sql);
+      rs.next();
+       stu =  getResult(rs);
+   
     } catch (Exception e) {
       // TODO: handle exception
+      e.printStackTrace();
     }
-    return null;
+    return stu;
+  }
+  
+  public Student getResult(ResultSet rs) throws SQLException {
+    Student st = new Student(rs.getInt("student_id"),rs.getString("name"),rs.getString("lop"));
+    return st;
   }
 
   @Override

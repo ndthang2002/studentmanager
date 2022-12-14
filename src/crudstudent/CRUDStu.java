@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import datastudent.Student;
+import data.Student;
 
 public class CRUDStu{
  

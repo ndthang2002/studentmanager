@@ -1,35 +1,25 @@
 package main;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import com.microsoft.schemas.office.visio.x2012.main.ShapeSheetType;
 
 import crudstudent.CRUDStu;
 import crudstudent.WriteReadExcel;
-import datastudent.Student;
-import repository.IstudentRepository;
+import data.Student;
+import service.ClassService;
 import service.StudentService;
 
 public class StudentMain {
   
   
-  public static void main (String[] args) {
+  public static void main (String[] args)  {
     
     // tiem mot phat
- 
+    StudentService sv = new StudentService();
+    ClassService clas = new ClassService();
     
    List<Student> lists = new ArrayList<>();
     lists.add(new Student(1, "thang", "12a"));
@@ -45,7 +35,8 @@ public class StudentMain {
     System.out.println("xin moi chon mot chuc nang :  \n no 1:\t xem danh sach cac hoc sinh: \n no 2\t xem hoc sinh theo id: \n no 3:\tthem hoc sinh moi : \n no 4: \tsua thong tim hoc sinh \n"
         + "no 5: \tghi vao excel :\nno 6: \tdoc Excexcel :");
   
-    System.out.println("lam viec voi database \n7\tadd:\n8\tdelete:\n9\tupdate:");
+    System.out.println("lam viec voi database  \nstudent--crud:\n\n7\tadd:\n8\tdelete:\n9\tupdate:\n10\tget:");
+    System.out.println("class--crud:\n11\tadd:\n12\tdelete:");
     int  chon= nhap.nextInt();
     nhap.nextLine();
     switch (chon) {
@@ -109,19 +100,60 @@ public class StudentMain {
       }
       case 7 :{
         
-        StudentService sv = new StudentService();
         sv.add();
         break;
       }
       case 8:{
-        StudentService sv = new StudentService();
         sv.delete();
         break;
       }
       case 9:{
-        StudentService sv = new StudentService();
         Student st = new Student(2,"hien", "10");
         sv.update(st);
+        break;
+      }
+      case 10:{
+        sv.get(2);
+        break;
+      }
+      case 11:{
+    
+        try {
+          System.out.println("nhap ten lop:");
+          String tenlop =nhap.nextLine();
+         
+              
+          clas.add(tenlop);
+        } catch (SQLException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+        break;
+      }
+      case 12:{
+        String tenlop =nhap.nextLine();
+
+        try {
+          clas.delete(tenlop);
+        } catch (SQLException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+        break;
+      } 
+      case 13 :{
+        System.out.println("nhap id lop:");
+        int id = nhap.nextInt();
+        
+        try {
+         List<Student> list = clas.getstudent(id);
+          for(Student l:list) {
+            System.out.println(l.toString());
+          }
+        } catch (SQLException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
         break;
       }
       default:

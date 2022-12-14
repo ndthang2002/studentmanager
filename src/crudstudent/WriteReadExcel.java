@@ -36,9 +36,7 @@ import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
-
-import datastudent.Student;
+import data.Student;
 import javafx.scene.chart.BubbleChart;
 import javafx.scene.input.DataFormat;
 import javafx.scene.layout.Background;
